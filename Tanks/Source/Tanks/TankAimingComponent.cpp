@@ -3,6 +3,7 @@
 #include "Tanks.h"
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -15,6 +16,10 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel *BarrelToSet) {
 	this->barrelStaticMeshComponent = BarrelToSet;
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret *TurretToSet) {
+	this->turretStaticMeshComponent = TurretToSet;
 }
 
 // Called when the game starts
@@ -31,6 +36,7 @@ void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, 
 }
 
 void UTankAimingComponent::AimAt(FVector location, float launchSpeed) {
+	if (!turretStaticMeshComponent) return;
 	if (!barrelStaticMeshComponent) return;
 
 	FVector outLaunchVelocity;
@@ -53,5 +59,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection) {
 	FRotator AimRotator = aimDirection.Rotation();
 	FRotator deltaRotator = AimRotator - BarrelRotator;
 
-	barrelStaticMeshComponent->Elevate(deltaRotator.Pitch); // TODO: Remove magic number
+	barrelStaticMeshComponent->Elevate(deltaRotator.Pitch);
+	turretStaticMeshComponent->Rotate(deltaRotator.Yaw);
 }

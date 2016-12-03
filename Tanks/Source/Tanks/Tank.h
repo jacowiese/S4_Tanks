@@ -8,6 +8,7 @@
 // Foward declarations
 class UTankAimingComponent;
 class UTankBarrel;
+class UTankTurret;
 
 UCLASS()
 class TANKS_API ATank : public APawn
@@ -19,6 +20,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel *BarrelToSet);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetTurretReference(UTankTurret *TurretToSet);
 
 protected:
 	UTankAimingComponent *tankAimingComponent = nullptr;
