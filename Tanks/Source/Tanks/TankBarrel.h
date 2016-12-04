@@ -8,7 +8,7 @@
 /**
  * Hold barrel's properties and Elevate method
  */
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), hidecategories=("Collision", "Physics") )
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class TANKS_API UTankBarrel : public UStaticMeshComponent
 {
 	GENERATED_BODY()
