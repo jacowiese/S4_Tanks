@@ -47,3 +47,8 @@ void ATank::AimAt(FVector location) {
 		tankAimingComponent->AimAt(location, LaunchSpeed);
 	}
 }
+
+void ATank::Fire() {
+	float Time = GetWorld()->GetTimeSeconds();
+	UE_LOG(LogTemp, Warning, TEXT("(%f) %s firing..."), Time, *GetName())
+}

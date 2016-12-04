@@ -44,13 +44,8 @@ void UTankAimingComponent::AimAt(FVector location, float launchSpeed) {
 
 	// Calculate the OutLaunchVelocity
 	if (UGameplayStatics::SuggestProjectileVelocity(this, outLaunchVelocity, startLocation, location, launchSpeed, false, 0, 0, ESuggestProjVelocityTraceOption::DoNotTrace)) {
-		UE_LOG(LogTemp, Warning, TEXT("Aim solution found."))
 		FVector aimDirection = outLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(aimDirection);
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("No aim solution found."))
 	}
 }
 
