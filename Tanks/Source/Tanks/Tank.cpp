@@ -50,12 +50,16 @@ void ATank::AimAt(FVector location) {
 }
 
 void ATank::Fire() {
-	float Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("(%f) %s firing..."), Time, *GetName())
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+	
+	if (Barrel && isReloaded) {
+		FVector spawnLocation = Barrel->GetSocketLocation(FName("Projectile"));
+		FRotator spawnRotation = Barrel->GetSocketRotation(FName("Projectile"));
+		AProjectile *projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, spawnLocation, spawnRotation);
 
-	if (!Barrel) return; // Is there a barrel? no, we're out of here
+		if (projectile != nullptr)
+			projectile->LaunchProjectile(LaunchSpeed);
 
-	FVector spawnLocation = Barrel->GetSocketLocation(FName("Projectile"));
-	FRotator spawnRotation = Barrel->GetSocketRotation(FName("Projectile"));
-	GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, spawnLocation, spawnRotation);
+		LastFireTime = FPlatformTime::Seconds();
+	}
 }
